@@ -2,16 +2,18 @@
 name: lovstudio-skill-publish
 description: >
   将已验证的本地 Skill 发布到一个或多个渠道；当用户说“发布这个 Skill”、
-  “上架 LovStudio”、"publish this skill" 或 "package for WorkBuddy" 时使用。
+  “上架 LovStudio”、"publish this skill"、"package for WorkBuddy" 或
+  “提交 SkillPay”时使用。
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.1.0"
+  version: "0.1.1"
   tags:
     - skill-publish
     - release
     - marketplace
     - workbuddy
+    - skillpay
   compatibility: "Python 3.8+, PyYAML, git, gh CLI, and target-specific credentials."
   dependencies: []
 ---
@@ -49,6 +51,8 @@ Supported adapters in this version:
 - **LovStudio** — source repository, release, catalog, cache refresh, and live page.
 - **Tencent WorkBuddy** — validated Connector ZIP and optional personal-library
   import. A successful local import is distinct from a public marketplace listing.
+- **Alipay SkillPay** — validated product ZIP, explicit CNY price, upload, parse,
+  submission, and observable review state.
 
 For any additional platform, follow `references/channels.md` and verify its
 current official name, submission contract, public URL, and completion signal
@@ -124,14 +128,23 @@ count, and output paths. If import is requested, continue until WorkBuddy shows
 the Skill in the installed list. Report a public listing only when the public
 marketplace itself provides that evidence.
 
-### Step 6: Additional platform adapter
+### Step 6: Submit Alipay SkillPay
+
+Read `references/skillpay.md` completely. Build a clean product ZIP outside the
+canonical source, keep the requested price as the single public CNY price, then
+upload and wait for parsing to finish before submitting. Record the product
+title, package checksum, requested price, submission result, and current review
+state. A parsed archive is only `uploaded`; a success notice after form
+submission is `review` until the marketplace marks the product live.
+
+### Step 7: Additional platform adapter
 
 Use the adapter contract in `references/channels.md`. Research current official
 documentation, implement deterministic preparation/validation scripts when
 useful, and define an observable completion gate. Never reuse another channel's
 metadata or call an upload dialog a completed publication.
 
-### Step 7: Multi-channel report
+### Step 8: Multi-channel report
 
 Report each target separately:
 

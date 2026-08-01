@@ -114,6 +114,30 @@ def copy_source_resources(source: Path, target: Path) -> None:
             )
 
 
+def make_module_self_contained(source: Path, target: Path) -> None:
+    """Copy shared kit resources into a standalone module package.
+
+    The combined entrypoint keeps `$KIT_DIR` semantics. WorkBuddy also emits
+    every module as an independently installable Skill, so those siblings need
+    their own copy of shared references/assets/scripts and local `$SKILL_DIR`
+    references.
+    """
+    for dirname in ("assets", "cases", "references", "scripts"):
+        candidate = source / dirname
+        if candidate.is_dir():
+            shutil.copytree(
+                candidate,
+                target / dirname,
+                dirs_exist_ok=True,
+                ignore=ignore_resources,
+            )
+    for path in target.rglob("*.md"):
+        original = path.read_text(encoding="utf-8")
+        updated = original.replace("$KIT_DIR/", "$SKILL_DIR/")
+        if updated != original:
+            path.write_text(updated, encoding="utf-8")
+
+
 def workbuddy_frontmatter(
     source_skill: Path, connector: dict[str, Any]
 ) -> tuple[str, str]:
@@ -237,6 +261,7 @@ def build(
             module_target = skills_target / module_name
             module_target.mkdir(parents=True)
             copy_source_resources(module_source, module_target)
+            make_module_self_contained(source, module_target)
 
     transform_skills(skills_target, connector)
 
@@ -267,7 +292,7 @@ def main() -> int:
     zip_path = (
         args.zip_path.expanduser().resolve()
         if args.zip_path
-        else output_dir.with_suffix(".zip")
+        else output_dir.parent / f"{output_dir.name}.zip"
     )
     individual_dir = (
         args.individual_dir.expanduser().resolve()
