@@ -253,7 +253,15 @@ def validate_local_references(root: Path, errors: list[str]) -> None:
             resolved = (path.parent / target).resolve()
             if not resolved.exists():
                 errors.append(f"{path}: broken local link '{target}'")
-        skill_root = path.parent if path.name == "SKILL.md" else root
+        skill_root = path.parent
+        current = path.parent
+        while current != root.parent:
+            if (current / "SKILL.md").is_file():
+                skill_root = current
+                break
+            if current == root:
+                break
+            current = current.parent
         kit_root = skill_root
         current = path.parent
         while current != root.parent:

@@ -38,6 +38,7 @@ SKIP_FILES = {
     "validate_skill.py",
 }
 SKIP_SUFFIXES = {".pyc", ".pyo"}
+PUBLISHER_SOURCE = Path(__file__).resolve().parent.parent
 
 
 def parse_args() -> argparse.Namespace:
@@ -107,10 +108,14 @@ def copy_source_resources(source: Path, target: Path) -> None:
     for dirname in RESOURCE_DIRS:
         candidate = source / dirname
         if candidate.is_dir():
+            # The publisher is itself a distributable Skill. Its validation and
+            # WorkBuddy-builder scripts are runtime dependencies, while those
+            # same files remain distribution tooling for every other Skill.
+            ignore = None if source.resolve() == PUBLISHER_SOURCE else ignore_resources
             shutil.copytree(
                 candidate,
                 target / dirname,
-                ignore=ignore_resources,
+                ignore=ignore,
             )
 
 

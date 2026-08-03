@@ -7,7 +7,7 @@ description: >
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.2.0"
+  version: "0.2.2"
   tags:
     - skill-publisher
     - release

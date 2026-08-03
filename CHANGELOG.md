@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.2] - 2026-08-03
+
+### Added
+
+- 修复 WorkBuddy 子 Skill 的本地资源校验
+- 按最近 SKILL.md 解析打包后 references 中的 SKILL_DIR 路径
+
+## [0.2.1] - 2026-08-03
+
+### Added
+
+- 修复 Publisher 自身的 WorkBuddy 自包含打包
+- 发布 Publisher 时保留其运行所需的校验与打包脚本
+
 ## [0.2.0] - 2026-08-03
 
 ### Added
