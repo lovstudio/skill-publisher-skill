@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0] - 2026-08-03
+
+### Added
+
+- 统一为 publisher 角色命名
+- 同步 Creator 与 Distiller 的发布交接名称
+
 ## 0.1.1
 
 - Add Alipay SkillPay as a first-class adapter with explicit package, upload,

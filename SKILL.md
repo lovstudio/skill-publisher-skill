@@ -1,24 +1,23 @@
 ---
-name: lovstudio-skill-publish
+name: lovstudio-skill-publisher
 description: >
-  将已验证的本地 Skill 发布到一个或多个渠道；当用户说“发布这个 Skill”、
-  “上架 LovStudio”、"publish this skill"、"package for WorkBuddy" 或
-  “提交 SkillPay”时使用。
+  Use when the user asks to publish a validated local Skill to one or more
+  channels, including “发布这个 Skill”、“上架 LovStudio”、"publish this skill"、
+  "package for WorkBuddy" 或“提交 SkillPay”。
 license: MIT
 metadata:
   author: lovstudio
-  version: "0.1.1"
+  version: "0.2.0"
   tags:
-    - skill-publish
+    - skill-publisher
     - release
     - marketplace
     - workbuddy
     - skillpay
-  compatibility: "Python 3.8+, PyYAML, git, gh CLI, and target-specific credentials."
   dependencies: []
 ---
 
-# lovstudio-skill-publish
+# lovstudio-skill-publisher
 
 Publish one validated local Skill source to one or more explicitly selected
 channels. Keep channel metadata and generated packages outside canonical source,
