@@ -1,4 +1,4 @@
-# lovstudio-skill-publisher
+# sgc-skill-publisher
 
 ![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
 
@@ -12,7 +12,7 @@
 export SKILL_SOURCE_DIR="$(pwd)"
 mkdir -p "${LOVSTUDIO_SKILLS_INSTALL_DIR:?请设置本地 Skills 目录}"
 ln -s "$SKILL_SOURCE_DIR" \
-  "$LOVSTUDIO_SKILLS_INSTALL_DIR/lovstudio-skill-publisher"
+  "$LOVSTUDIO_SKILLS_INSTALL_DIR/sgc-skill-publisher"
 ```
 
 ## 当前适配器
