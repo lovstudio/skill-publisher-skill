@@ -1,6 +1,6 @@
-# Publishing to LovStudio
+# Publishing to Skill Publisher
 
-This adapter turns validated local source into a GitHub-backed LovStudio release,
+This adapter turns validated local source into a GitHub-backed Skill Publisher release,
 catalog entry, and verified live detail page.
 
 ## Inputs
@@ -45,10 +45,10 @@ and render scripts. Do not hand-edit generated mirror directories.
 Replace `CATALOG`, `NAME`, and the site URL with configured values:
 
 ```bash
-test -n "$LOVSTUDIO_REVALIDATE_SECRET"
+test -n "$SKILL_REVALIDATE_SECRET"
 
 curl -fsS -X POST "SITE_URL/api/revalidate" \
-  -H "x-revalidate-secret: $LOVSTUDIO_REVALIDATE_SECRET" \
+  -H "x-revalidate-secret: $SKILL_REVALIDATE_SECRET" \
   -H "content-type: application/json" \
   -d '{
     "tags":[
