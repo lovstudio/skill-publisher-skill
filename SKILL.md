@@ -7,7 +7,7 @@ description: >
 license: MIT
 metadata:
   author: contributors
-  version: "0.3.0"
+  version: "0.3.1"
   tags:
     - skill-publisher
     - release
@@ -19,9 +19,10 @@ metadata:
 
 # sgc-skill-publisher
 
-Publish one validated local Skill source to one or more explicitly selected
-channels. Keep channel metadata and generated packages outside canonical source,
-execute each adapter independently, and report evidence per channel.
+Publish one validated local Skill source to one or more publishing channels. When
+the user does not specify a channel, run every supported adapter by default. Keep
+channel metadata and generated packages outside canonical source, execute each
+adapter independently, and report evidence per channel.
 
 ## Triggers
 
@@ -38,8 +39,9 @@ execute each adapter independently, and report evidence per channel.
 ## Product boundary
 
 - Input is a local Skill source that already passes source validation.
-- No remote channel is selected by default.
-- Use every channel explicitly named by the user; ask once only when none is named.
+- When no channel is specified, select every supported adapter by default.
+- Explicitly named channels narrow the run; do not ask a channel-selection question
+  when the request omits channel parameters.
 - A request may select multiple channels in one run.
 - Pricing, visibility, protection, licensing, and target accounts are publishing
   inputs. Reuse context when known and ask only for values required by a target.
@@ -84,7 +86,8 @@ and whether a remote already exists.
 ### Step 2: Resolve channels and release model
 
 If channels are explicit, proceed without another distribution question. If no
-channel is named, ask one focused question listing configured adapters.
+channel is named, select all supported adapters and proceed without asking the
+user to choose a channel.
 
 For each selected channel, resolve only required fields:
 

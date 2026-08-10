@@ -1,6 +1,6 @@
 # sgc-skill-publisher
 
-![Version](https://img.shields.io/badge/version-0.3.0-CC785C)
+![Version](https://img.shields.io/badge/version-0.3.1-CC785C)
 
 把已经验证并安装在本地的 Skill 发布到一个或多个独立渠道，同时保持平台元数据和发行产物不污染源代码。
 
@@ -27,6 +27,7 @@ ln -s "$SKILL_SOURCE_DIR" \
 
 ## 使用示例
 
+- 直接调用 `sgc-skill-publisher`：默认发布到全部支持渠道。
 - “把这个本地 Skill 发布到 Skill Publisher。”
 - “给这个 Skill 生成 WorkBuddy 包。”
 - “把这个 Skill 按 ¥19.9 提交到 SkillPay。”
