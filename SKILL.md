@@ -1,5 +1,5 @@
 ---
-name: sgc-skill-publisher
+name: lov-skill-publisher
 description: >
   Use when the user asks to publish a validated local Skill to one or more
   channels, including “发布这个 Skill”、“上架 Skill Publisher”、"publish this skill"、
@@ -17,7 +17,7 @@ metadata:
   dependencies: []
 ---
 
-# sgc-skill-publisher
+# lov-skill-publisher
 
 Publish one validated local Skill source to one or more publishing channels. When
 the user does not specify a channel, run every supported adapter by default. Keep
@@ -33,7 +33,7 @@ adapter independently, and report evidence per channel.
 
 ### Do not activate when
 
-- 用户要创建、实现、修改或仅在本地安装 Skill；交给 `sgc-skill-creator`。
+- 用户要创建、实现、修改或仅在本地安装 Skill；交给 `lov-skill-creator`。
 - 用户只是在调用某个业务 Skill，而不是发布它。
 
 ## Product boundary

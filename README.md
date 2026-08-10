@@ -1,4 +1,4 @@
-# sgc-skill-publisher
+# lov-skill-publisher
 
 ![Version](https://img.shields.io/badge/version-0.3.1-CC785C)
 
@@ -12,7 +12,7 @@
 export SKILL_SOURCE_DIR="$(pwd)"
 mkdir -p "${SKILL_SKILLS_INSTALL_DIR:?请设置本地 Skills 目录}"
 ln -s "$SKILL_SOURCE_DIR" \
-  "$SKILL_SKILLS_INSTALL_DIR/sgc-skill-publisher"
+  "$SKILL_SKILLS_INSTALL_DIR/lov-skill-publisher"
 ```
 
 ## 当前适配器
@@ -27,7 +27,7 @@ ln -s "$SKILL_SOURCE_DIR" \
 
 ## 使用示例
 
-- 直接调用 `sgc-skill-publisher`：默认发布到全部支持渠道。
+- 直接调用 `lov-skill-publisher`：默认发布到全部支持渠道。
 - “把这个本地 Skill 发布到 Skill Publisher。”
 - “给这个 Skill 生成 WorkBuddy 包。”
 - “把这个 Skill 按 ¥19.9 提交到 SkillPay。”
