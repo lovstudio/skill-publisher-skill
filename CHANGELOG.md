@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0] - 2026-08-14
+
+### Added
+
+- default every publishing run to evidence-backed automatic pricing
+- reuse one lov-skill-pricing Pricing Card across Skill Publisher, WorkBuddy, and SkillPay adapters
+- treat explicit user prices as publishing constraints and fix the Skill Publisher reference path
+
 ## [0.3.3] - 2026-08-11
 
 ### Fixed
