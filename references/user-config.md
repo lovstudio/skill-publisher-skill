@@ -26,8 +26,8 @@ Recommended shape:
     "default_visibility": "private",
     "output_dir": "$HOME/Documents/skill-releases",
     "skill-publisher": {
-      "general_catalog": "$HOME/projects/general-skills",
-      "dev_catalog": "$HOME/projects/dev-skills",
+      "catalog": "$HOME/projects/skills",
+      "catalog_repo": "lovstudio/skills",
       "site_url": "https://example.com/skills"
     },
     "workbuddy": {

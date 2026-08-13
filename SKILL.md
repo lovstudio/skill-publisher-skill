@@ -11,7 +11,7 @@ compatibility: >-
   stores; generated metadata and archives stay outside canonical source.
 metadata:
   author: contributors
-  version: "0.4.0"
+  version: "0.4.1"
   tags:
     - skill-publisher
     - release

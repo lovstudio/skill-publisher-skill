@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1] - 2026-08-14
+
+### Fixed
+
+- target the unified lovstudio/skills catalog
+- replace archived General and Dev catalog settings and cache tags
+
 ## [0.4.0] - 2026-08-14
 
 ### Added
