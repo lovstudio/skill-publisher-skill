@@ -9,20 +9,21 @@ compatibility: >-
   Requires Python 3.8+, PyYAML, git and GitHub CLI for the Skill Publisher
   adapter. Channel credentials stay in environment variables or credential
   stores; generated metadata and archives stay outside canonical source.
+depends_on:
+  - lov-branding-consistency
+  - lov-skill-pricing
 metadata:
   author: contributors
-  version: "0.7.2"
+  version: "0.7.6"
   tags:
     - skill-publisher
     - release
     - marketplace
     - workbuddy
     - skillpay
-  dependencies:
-    - lov-skill-pricing
 ---
 
-# lov-skill-publisher
+# Skill 发布助手 · Skill Publisher
 
 Publish one validated local Skill source to the LovStudio official website or
 explicitly selected additional channels. When the user does not specify a
