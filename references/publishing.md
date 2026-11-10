@@ -262,22 +262,12 @@ has been observed, so it is written twice:
 
 ## Revalidate
 
-Timing decides whether this call works. lovstudio.ai reads `skills.yaml` from
-`raw.githubusercontent.com`, whose CDN keeps serving the previous file for up to
-5 minutes (`cache-control: max-age=300`). A call sent inside that window makes
-the site fetch the old catalog and cache it again for up to 10 minutes.
+Since lovstudio/lovstudio-home#148 (2026-11-10), lovstudio.ai reads
+`skills.yaml`, and the free Skill documents mirrored into the catalog, at the
+commit `main` points to, so this call can follow the merge right away. The
+response names the commit the site read.
 
-1. Note when the catalog change reached `main`, and count the entries the site
-   will see, from the catalog checkout on that commit:
-
-   ```bash
-   python3 -c "import yaml; print(sum(not s.get('test') for s in yaml.safe_load(open('skills.yaml'))['skills']))"
-   ```
-
-2. Wait at least 5 minutes after the merge. A local `curl` of the raw URL that
-   already shows the change proves only that one CDN node has refreshed; it
-   does not shorten the wait.
-3. Send the request. Replace `NAME` and the site URL with configured values:
+1. Send the request. Replace `NAME` and the site URL with configured values:
 
    ```bash
    test -n "$LOVSTUDIO_REVALIDATE_SECRET"
@@ -285,6 +275,7 @@ the site fetch the old catalog and cache it again for up to 10 minutes.
    curl -fsS -X POST "SITE_URL/api/revalidate" \
      -H "x-revalidate-secret: $LOVSTUDIO_REVALIDATE_SECRET" \
      -H "content-type: application/json" \
+     -o /tmp/lov-revalidate.json \
      -d '{
        "tags":[
          "skills-index",
@@ -297,30 +288,41 @@ the site fetch the old catalog and cache it again for up to 10 minutes.
      }'
    ```
 
-4. Read `pricing_sync.catalog_skills` in the JSON response before verifying
-   anything else:
-   - Entry added or delisted: the count equals the number from step 1, one more
-     than before for a new entry. If it did not change, the site read the old
-     catalog; wait until 5 minutes have passed since the merge and send the
-     request again.
-   - Existing entry updated: the count stays the same, so the signal is the new
-     version on the detail page.
-   - `{"status":"deferred"}` instead of counts: the site's catalog sync failed
-     and there is no count. Report it and judge by the detail page.
+2. Compare the commit the site read with the one `main` points to now, before
+   verifying anything else:
 
-An early call shows up in two places, both fed by the catalog cache this call
-refreshes: `/skills/NAME` keeps returning 404 for a new entry (or shows the
-previous version for an update), and `npx lovstudio skills add NAME` answers
-`目录中没有找到 Skill：NAME`, because the CLI asks the site's catalog endpoint
-first. That endpoint needs no secret and lists the entries the site currently
-knows (internal ones excepted), so it is also the direct check:
+   ```bash
+   gh api repos/lovstudio/skills/commits/main -H 'Accept: application/vnd.github.sha'
+   python3 -c "import json; print(json.load(open('/tmp/lov-revalidate.json')).get('catalog_commits'))"
+   ```
+
+   - Same commit: the site read the catalog that holds the change. Go on to
+     "Verify the visible result".
+   - A different commit: `main` moved after the site read it. Send the request
+     again.
+   - No `lovstudio/skills` commit: the site could not ask GitHub where `main`
+     points (no `GITHUB_TOKEN` on the site, or the API failed or took longer
+     than 5 seconds) and read `main` through `raw.githubusercontent.com`, whose
+     CDN keeps the previous file for up to 5 minutes (`cache-control:
+     max-age=300`); a read inside that window caches the old catalog again for
+     up to 10 minutes. Send the request again; if the commit is still missing,
+     wait until 5 minutes have passed since the merge and send it once more.
+   - `pricing_sync` reports `catalog_skills` as before. `{"status":"deferred"}`
+     instead of counts means the site's catalog sync failed: report it and
+     judge by the detail page.
+
+A read of the previous catalog shows up in two places, both fed by the catalog
+cache this call refreshes: `/skills/NAME` keeps returning 404 for a new entry
+(or shows the previous version for an update), and `npx lovstudio skills add
+NAME` answers `目录中没有找到 Skill：NAME`, because the CLI asks the site's
+catalog endpoint first. That endpoint needs no secret and lists the entries the
+site currently knows (internal ones excepted), so it is also the direct check:
 
 ```bash
 curl -fsS "SITE_URL/api/skills/catalog" | grep -c '"name":"NAME"'   # 1: the site has read the entry
 ```
 
-Neither symptom means the publication failed. Wait until 5 minutes have passed
-since the merge and send the request again.
+Neither symptom means the publication failed: go back to step 2.
 
 lovstudio.cn is a separate deployment, and this call does not reach it. It reads
 the catalog and the free Skill documents from the OSS copy uploaded by the

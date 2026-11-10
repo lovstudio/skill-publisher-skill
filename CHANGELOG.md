@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.3] - 2026-11-10
+
+### Changed
+
+- publishing.md: revalidate right after the catalog merge. lovstudio.ai now reads the catalog and the free Skill documents mirrored into it at the commit `main` points to (lovstudio/lovstudio-home#148), and `/api/revalidate` answers with `catalog_commits`; the call worked when that commit is the one `main` points to. The 5-minute wait remains only for a response without the catalog's commit, when the site fell back to raw's cached `main`. The entry-count step is gone: the commit replaces it.
+- AGENTS.md: the revalidate note follows the same rule.
+
 ## [0.8.2] - 2026-11-10
 
 ### Fixed
