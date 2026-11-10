@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.4] - 2026-11-10
+
+### Changed
+
+- publishing.md: the catalog's `Refresh website` workflow (lovstudio/skills#66) now refreshes lovstudio.ai after each catalog push and checks `catalog_commits`. It skips the per-Skill tags and only warns without its secret, so the Revalidate request stays part of every publication.
+- AGENTS.md: notes that workflow, its `LOVSTUDIO_REVALIDATE_SECRET` secret, and that Cloudflare answers Python's default User-Agent on lovstudio.ai with `403 error code: 1010`.
+
 ## [0.8.3] - 2026-11-10
 
 ### Changed

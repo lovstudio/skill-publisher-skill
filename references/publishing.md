@@ -267,6 +267,12 @@ Since lovstudio/lovstudio-home#148 (2026-11-10), lovstudio.ai reads
 commit `main` points to, so this call can follow the merge right away. The
 response names the commit the site read.
 
+The catalog's `Refresh website` workflow (lovstudio/skills#66) also sends a
+catalog-only refresh after every push to `main` that touches `skills.yaml` or
+`skills/`, and fails when the site read another commit. It does not purge the
+per-Skill tags below, and while the catalog repository lacks the
+`LOVSTUDIO_REVALIDATE_SECRET` secret it only warns. Send this request anyway.
+
 1. Send the request. Replace `NAME` and the site URL with configured values:
 
    ```bash
